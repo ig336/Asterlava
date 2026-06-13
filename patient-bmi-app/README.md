@@ -11,18 +11,36 @@ A complete Next.js take-home application for collecting patient demographics, ca
 - HMAC blind indexes for exact last-name/email search without storing plaintext identifiers
 - Vitest unit tests for BMI domain logic
 
+## Features
+
+- Patient demographic intake form
+- Metric and imperial height/weight entry
+- Automatic BMI calculation and BMI category assignment
+- Clinician review table
+- Filters for sex and BMI category
+- Exact search by last name or email using keyed blind indexes
+- PostgreSQL persistence through Prisma
+- Application-layer encryption for PHI fields before database storage
+- Graceful database-unavailable state during local setup
+
 ## Quick Start
 
 ```bash
-cd patient-bmi-app
+git clone https://github.com/ig336/BMI-calculator-.git
+cd BMI-calculator-/patient-bmi-app
+npm install
 cp .env.example .env
+```
+
+Generate two different 32-byte base64 keys:
+
+```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
 ```
 
-Paste different generated values into `ENCRYPTION_KEY` and `SEARCH_INDEX_KEY`, then run:
+Paste one value into `ENCRYPTION_KEY` and another into `SEARCH_INDEX_KEY`, then run:
 
 ```bash
-npm install
 docker compose up -d
 npm run db:migrate
 npm run db:seed
@@ -46,12 +64,34 @@ This demo encrypts patient demographic fields before database insertion. It stor
 
 For production, add authentication/authorization, audit logs, TLS-only deployment, managed secret rotation, backups with separate keys, and row-level access policies. True browser-to-clinician end-to-end encryption would require a key-sharing design and would limit server-side filtering; this version uses application-layer encryption at rest, which fits the take-home's clinician review requirement.
 
+## Deployment
+
+This is a full-stack Next.js app, so it can be deployed to platforms such as Vercel, Render, Railway, or Fly.io. Use a hosted PostgreSQL provider such as Neon, Supabase, Railway Postgres, or Render Postgres.
+
+Set these production environment variables:
+
+```bash
+DATABASE_URL="postgresql://..."
+ENCRYPTION_KEY="32-byte-base64-key"
+SEARCH_INDEX_KEY="different-32-byte-base64-key"
+```
+
+Run the Prisma migration during deployment or release setup:
+
+```bash
+npm run db:migrate
+```
+
+For production data, do not run the seed script unless sample records are desired.
+
 ## Scripts
 
 ```bash
 npm run dev
 npm run build
 npm run test
+npm run lint
 npm run db:migrate
+npm run db:seed
 npm run db:studio
 ```
