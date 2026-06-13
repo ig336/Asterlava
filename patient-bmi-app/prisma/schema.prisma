@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Patient {
+  id               String      @id @default(cuid())
+  firstName        String
+  lastName         String
+  dateOfBirth      String
+  sex              Sex
+  email            String
+  phone            String
+  zipCode          String
+  heightCm         Decimal     @db.Decimal(6, 2)
+  weightKg         Decimal     @db.Decimal(6, 2)
+  bmi              Decimal     @db.Decimal(5, 2)
+  bmiCategory      BmiCategory
+  lastNameIndex    String
+  emailIndex       String
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@index([bmiCategory])
+  @@index([sex])
+  @@index([createdAt])
+  @@index([lastNameIndex])
+  @@unique([emailIndex])
+}
+
+enum Sex {
+  FEMALE
+  MALE
+  NON_BINARY
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum BmiCategory {
+  UNDERWEIGHT
+  HEALTHY
+  OVERWEIGHT
+  OBESITY
+}

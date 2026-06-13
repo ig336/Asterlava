@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: patient_bmi
+      POSTGRES_USER: patient_app
+      POSTGRES_PASSWORD: patient_app_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - patient-bmi-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U patient_app -d patient_bmi"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  patient-bmi-data:
