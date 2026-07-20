@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #141918;
+}
+
+button,
+input,
+select,
+a {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+.listening-field {
+  background-image:
+    linear-gradient(115deg, transparent 0 42%, rgba(16, 19, 18, 0.025) 42.2% 42.38%, transparent 42.6%),
+    linear-gradient(65deg, transparent 0 56%, rgba(39, 81, 75, 0.03) 56.2% 56.38%, transparent 56.6%),
+    radial-gradient(circle at 72% 42%, rgba(39, 81, 75, 0.07), transparent 22%),
+    radial-gradient(circle at 22% 74%, rgba(198, 207, 179, 0.14), transparent 24%);
+  background-size: 140px 140px, 180px 180px, 100% 100%, 100% 100%;
+  mask-image: radial-gradient(circle at 50% 42%, black, transparent 78%);
+  animation: listening-field 18s ease-in-out infinite;
+}
+
+.signal-grid {
+  background-image:
+    radial-gradient(circle at 50% 32%, transparent 0 11%, rgba(133, 185, 169, 0.11) 11.1% 11.22%, transparent 11.35% 21%, rgba(133, 185, 169, 0.075) 21.1% 21.22%, transparent 21.35% 33%, rgba(133, 185, 169, 0.055) 33.1% 33.22%, transparent 33.35%),
+    linear-gradient(90deg, transparent 49.8%, rgba(153, 179, 170, 0.055) 50%, transparent 50.2%),
+    linear-gradient(0deg, transparent 49.8%, rgba(153, 179, 170, 0.055) 50%, transparent 50.2%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.018), transparent 30%, rgba(67, 113, 101, 0.04) 70%, transparent);
+  background-size: 100% 100%, 112px 112px, 112px 112px, 100% 100%;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+  opacity: 0.18;
+}
+
+.voice-visual {
+  background-image:
+    linear-gradient(90deg, rgba(7, 12, 13, 0.96) 0%, rgba(7, 12, 13, 0.86) 28%, rgba(7, 12, 13, 0.46) 52%, rgba(7, 12, 13, 0.1) 78%, rgba(7, 12, 13, 0.2) 100%),
+    linear-gradient(180deg, rgba(7, 12, 13, 0.26), rgba(7, 12, 13, 0.02) 50%, rgba(7, 12, 13, 0.3)),
+    url("/voice-intelligence-hd.jpeg");
+  background-position: center, center, center;
+  background-repeat: no-repeat;
+  background-size: cover, cover, cover;
+  filter: saturate(0.82) contrast(1.38) brightness(0.96);
+  opacity: 1;
+  mix-blend-mode: normal;
+}
+
+.manifesto-glow {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(56, 121, 106, 0.25), transparent 34%),
+    radial-gradient(circle at 90% 65%, rgba(111, 135, 125, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 30%);
+}
+
+article p,
+article h1,
+article div {
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.42);
+}
+
+.voice-graphic {
+  position: absolute;
+  top: 13%;
+  right: -8rem;
+  z-index: -5;
+  width: min(44vw, 38rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0.8;
+  transform: rotate(-18deg);
+  animation: voice-drift 16s ease-in-out infinite;
+}
+
+.voice-graphic__ring {
+  position: absolute;
+  inset: 12%;
+  border: 1px solid rgba(188, 133, 94, 0.32);
+  border-radius: 48% 52% 49% 51%;
+  transform: rotate(24deg) scaleY(0.48);
+}
+
+.voice-graphic__ring--two {
+  inset: 23%;
+  border-color: rgba(221, 168, 119, 0.4);
+  transform: rotate(-28deg) scaleY(0.58);
+}
+
+.voice-graphic__ring--three {
+  inset: 34%;
+  border-color: rgba(221, 168, 119, 0.52);
+  transform: rotate(14deg) scaleY(0.72);
+}
+
+.voice-graphic__core {
+  position: absolute;
+  top: 48%;
+  left: 48%;
+  width: 4%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #dca777;
+  box-shadow: 0 0 34px rgba(220, 167, 119, 0.8);
+}
+
+.signal-mark {
+  display: inline-flex;
+  height: 24px;
+  align-items: center;
+  gap: 2px;
+}
+
+.signal-mark i {
+  display: block;
+  width: 3px;
+  border-radius: 999px;
+  background: #8fc9b7;
+  animation: signal-pulse 1.8s ease-in-out infinite;
+}
+
+.signal-mark i:nth-child(1),
+.signal-mark i:nth-child(5) { height: 8px; }
+.signal-mark i:nth-child(2),
+.signal-mark i:nth-child(4) { height: 15px; animation-delay: -0.25s; }
+.signal-mark i:nth-child(3) { height: 23px; animation-delay: -0.5s; }
+
+.slow-wave {
+  animation: slow-wave 14s ease-in-out infinite;
+  transform: rotate(-12deg);
+}
+
+.slow-wave-delayed {
+  animation-delay: -7s;
+  transform: rotate(8deg);
+}
+
+.logo-marquee {
+  animation: logo-marquee 28s linear infinite;
+}
+
+.logo-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes listening-field {
+  0%,
+  100% {
+    background-position: 0 0, 0 0, 0 0, 0 0, 0 0;
+    opacity: 0.78;
+  }
+  50% {
+    background-position: 28px -18px, -22px 26px, 0 0, 0 0, 0 0;
+    opacity: 1;
+  }
+}
+
+@keyframes slow-wave {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: translate3d(0, 0, 0) rotate(-12deg) scale(1);
+  }
+  50% {
+    opacity: 0.42;
+    transform: translate3d(-18px, 10px, 0) rotate(-8deg) scale(1.04);
+  }
+}
+
+@keyframes logo-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes signal-pulse {
+  0%, 100% { transform: scaleY(0.72); opacity: 0.58; }
+  50% { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes voice-drift {
+  0%, 100% { transform: rotate(-18deg) translate3d(0, 0, 0); }
+  50% { transform: rotate(-12deg) translate3d(-16px, 12px, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .listening-field,
+  .signal-grid,
+  .voice-graphic,
+  .signal-mark i,
+  .slow-wave,
+  .logo-marquee {
+    animation: none;
+  }
+}
+
+@media (max-width: 700px) {
+  .voice-visual {
+    background-position: center, center, center;
+    background-size: cover, cover, cover;
+    opacity: 0.62;
+  }
+
+  .voice-graphic {
+    top: 18%;
+    right: -12rem;
+    width: 28rem;
+    opacity: 0.42;
+  }
+}
