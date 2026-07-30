@@ -167,6 +167,29 @@ article div {
   animation-play-state: paused;
 }
 
+.logo-tile {
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.logo-image {
+  display: block;
+  width: auto;
+  max-width: 12.5rem;
+  height: auto;
+  max-height: 3.25rem;
+  object-fit: contain;
+  mix-blend-mode: normal;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.28));
+}
+
+.logo-strip {
+  background: linear-gradient(180deg, transparent, rgba(226, 226, 222, 0.78) 28%, rgba(226, 226, 222, 0.78));
+  box-shadow: 0 -10px 34px rgba(8, 10, 17, 0.18);
+}
+
 @keyframes listening-field {
   0%,
   100% {

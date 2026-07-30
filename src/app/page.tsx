@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 const institutions = [
-  "J.P. Morgan",
-  "Weill Cornell Medicine",
-  "Cornell",
-  "NYC Housing",
-  "IHG Hotels & Resorts",
-  "Olympiad"
+  { name: "J.P. Morgan", logo: "/logo-jpmorgan-transparent.png" },
+  { name: "Weill Cornell Medicine", logo: "/logo-weill-cornell-transparent.png" },
+  { name: "Cornell University", logo: "/logo-cornell-transparent.png" },
+  { name: "NYC Buildings", logo: "/logo-nyc-buildings-transparent.png" },
+  { name: "IHG Hotels & Resorts", logo: "/logo-ihg-transparent.png" },
+  { name: "Stanford ML", logo: "/logo-stanford-ml-transparent.png" }
 ];
 
 const manifesto = [
@@ -103,15 +105,21 @@ function LogoMarquee() {
   const repeated = [...institutions, ...institutions];
 
   return (
-    <div className="fixed inset-x-0 bottom-0 border-t border-white/10 bg-[#141918]/90 py-2.5 backdrop-blur-xl">
+    <div className="logo-strip fixed inset-x-0 bottom-0 py-2.5 backdrop-blur-xl">
       <div className="logo-marquee flex w-max gap-3 px-3">
         {repeated.map((institution, index) => (
           <div
             key={`${institution}-${index}`}
-            className="flex h-10 min-w-40 items-center justify-center rounded-full border border-white/10 bg-white/[0.035] px-5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#7f8883]"
+            className="logo-tile flex h-16 min-w-52 items-center justify-center px-5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#7f8883]"
             aria-hidden={index >= institutions.length}
           >
-            {institution}
+            <Image
+              className="logo-image"
+              src={institution.logo}
+              alt={index < institutions.length ? institution.name : ""}
+              width={168}
+              height={56}
+            />
           </div>
         ))}
       </div>
