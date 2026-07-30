@@ -135,6 +135,14 @@ article div {
   gap: 2px;
 }
 
+.asterlava-logo {
+  display: block;
+  width: 3rem;
+  height: 2rem;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(239, 178, 91, 0.22));
+}
+
 .signal-mark i {
   display: block;
   width: 3px;
@@ -188,6 +196,16 @@ article div {
 .logo-strip {
   background: linear-gradient(180deg, transparent, rgba(226, 226, 222, 0.78) 28%, rgba(226, 226, 222, 0.78));
   box-shadow: 0 -10px 34px rgba(8, 10, 17, 0.18);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(100%);
+  transition: opacity 360ms ease, transform 360ms ease;
+}
+
+.logo-strip--visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
 @keyframes listening-field {

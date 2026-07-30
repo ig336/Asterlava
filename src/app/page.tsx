@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { track } from "@vercel/analytics";
 
 const institutions = [
   { name: "J.P. Morgan", logo: "/logo-jpmorgan-transparent.png" },
@@ -50,6 +54,18 @@ const manifesto = [
 ];
 
 export default function Home() {
+  const [showLogos, setShowLogos] = useState(false);
+
+  useEffect(() => {
+    const updateLogoVisibility = () => {
+      setShowLogos(window.scrollY > window.innerHeight * 0.72);
+    };
+
+    updateLogoVisibility();
+    window.addEventListener("scroll", updateLogoVisibility, { passive: true });
+    return () => window.removeEventListener("scroll", updateLogoVisibility);
+  }, []);
+
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#141918] text-[#f3f4ef]">
       <div className="manifesto-glow absolute inset-0 -z-20" />
@@ -59,14 +75,8 @@ export default function Home() {
       <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col px-5 pb-24 pt-8 sm:px-8 sm:pt-10">
         <header className="flex items-center justify-between gap-6">
           <a href="#" className="flex items-center gap-4 text-[1.2rem] font-semibold uppercase tracking-[0.32em] text-[#f3f4ef] sm:text-[1.4rem]">
-            <span className="signal-mark" aria-hidden="true"><i /><i /><i /><i /><i /></span>
+            <Image className="asterlava-logo" src="/asterlava-logo.png" alt="" width={48} height={32} priority />
             Asterlava
-          </a>
-          <a
-            href="mailto:ig336@cornell.edu?subject=Asterlava%20demo"
-            className="rounded-full border border-[#dca777]/50 bg-[#dca777]/10 px-4 py-2 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#f1c39a] transition-colors hover:bg-[#dca777]/20 sm:px-5 sm:py-2.5"
-          >
-            Get in touch
           </a>
         </header>
 
@@ -90,22 +100,37 @@ export default function Home() {
               </p>
             ))}
           </div>
+          <div className="mt-12 flex flex-wrap items-center gap-3 sm:mt-14">
+            <a
+              href="mailto:ishita@asterlava.com?subject=Asterlava%20waitlist"
+              onClick={() => track("waitlist_click", { location: "manifesto_end" })}
+              className="rounded-full bg-[#f1c39a] px-5 py-2.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#241923] transition-colors hover:bg-[#ffe1bd]"
+            >
+              Join waitlist
+            </a>
+            <a
+              href="mailto:ishita@asterlava.com?subject=Asterlava%20demo"
+              className="rounded-full border border-[#dca777]/50 bg-[#dca777]/10 px-5 py-2.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#f1c39a] transition-colors hover:bg-[#dca777]/20"
+            >
+              Get in touch
+            </a>
+          </div>
         </article>
 
       </section>
 
       <div className="relative z-20">
-        <LogoMarquee />
+        <LogoMarquee visible={showLogos} />
       </div>
     </main>
   );
 }
 
-function LogoMarquee() {
+function LogoMarquee({ visible }: { visible: boolean }) {
   const repeated = [...institutions, ...institutions];
 
   return (
-    <div className="logo-strip fixed inset-x-0 bottom-0 py-2.5 backdrop-blur-xl">
+    <div className={`logo-strip fixed inset-x-0 bottom-0 py-2.5 backdrop-blur-xl ${visible ? "logo-strip--visible" : ""}`}>
       <div className="logo-marquee flex w-max gap-3 px-3">
         {repeated.map((institution, index) => (
           <div
