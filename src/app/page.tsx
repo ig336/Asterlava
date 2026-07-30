@@ -5,12 +5,12 @@ import Image from "next/image";
 import { track } from "@vercel/analytics";
 
 const institutions = [
-  { name: "J.P. Morgan", logo: "/logo-jpmorgan-transparent.png" },
-  { name: "Weill Cornell Medicine", logo: "/logo-weill-cornell-transparent.png" },
-  { name: "Cornell University", logo: "/logo-cornell-transparent.png" },
-  { name: "NYC Buildings", logo: "/logo-nyc-buildings-transparent.png" },
-  { name: "IHG Hotels & Resorts", logo: "/logo-ihg-transparent.png" },
-  { name: "Stanford ML", logo: "/logo-stanford-ml-transparent.png" }
+  { name: "J.P. Morgan", logo: "/logo-jpmorgan-transparent.png", tone: "" },
+  { name: "Weill Cornell Medicine", logo: "/cornell-seal-official.svg", tone: "logo-lockup--weill", lines: ["Weill Cornell", "Medicine"] },
+  { name: "Cornell University", logo: "/cornell-seal-official.svg", tone: "logo-lockup--cornell", lines: ["Cornell University"] },
+  { name: "NYC Buildings", logo: "/logo-nyc-buildings-supplied.png", tone: "" },
+  { name: "IHG Hotels & Resorts", logo: "/logo-ihg-transparent.png", tone: "logo-image--light" },
+  { name: "Stanford ML", logo: "/logo-stanford-ml.svg", tone: "" }
 ];
 
 const manifesto = [
@@ -58,7 +58,8 @@ export default function Home() {
 
   useEffect(() => {
     const updateLogoVisibility = () => {
-      setShowLogos(window.scrollY > window.innerHeight * 0.72);
+      const pageBottom = document.documentElement.scrollHeight - window.innerHeight;
+      setShowLogos(window.scrollY >= pageBottom - 24);
     };
 
     updateLogoVisibility();
@@ -135,16 +136,25 @@ function LogoMarquee({ visible }: { visible: boolean }) {
         {repeated.map((institution, index) => (
           <div
             key={`${institution}-${index}`}
-            className="logo-tile flex h-16 min-w-52 items-center justify-center px-5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#7f8883]"
+            className="logo-tile flex h-20 min-w-56 items-center justify-center px-5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#7f8883]"
             aria-hidden={index >= institutions.length}
           >
-            <Image
-              className="logo-image"
-              src={institution.logo}
-              alt={index < institutions.length ? institution.name : ""}
-              width={168}
-              height={56}
-            />
+            {institution.lines ? (
+              <span className={`logo-lockup ${institution.tone}`}>
+                <Image className="logo-seal" src={institution.logo} alt="" width={54} height={54} />
+                <span className="logo-lockup__text">
+                  {institution.lines.map((line) => <span key={line}>{line}</span>)}
+                </span>
+              </span>
+            ) : (
+              <Image
+                className={`logo-image ${institution.tone}`}
+                src={institution.logo}
+                alt={index < institutions.length ? institution.name : ""}
+                width={224}
+                height={80}
+              />
+            )}
           </div>
         ))}
       </div>
