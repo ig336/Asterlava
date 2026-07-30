@@ -197,6 +197,12 @@ article div {
   filter: invert(1) brightness(0.92) drop-shadow(0 2px 12px rgba(0, 0, 0, 0.28));
 }
 
+.logo-image--nyc {
+  max-width: 11.5rem;
+  max-height: 4.25rem;
+  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.3));
+}
+
 .logo-lockup {
   display: inline-flex;
   align-items: center;

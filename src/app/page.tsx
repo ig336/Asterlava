@@ -8,7 +8,7 @@ const institutions = [
   { name: "J.P. Morgan", logo: "/logo-jpmorgan-transparent.png", tone: "" },
   { name: "Weill Cornell Medicine", logo: "/cornell-seal-official.svg", tone: "logo-lockup--weill", lines: ["Weill Cornell", "Medicine"] },
   { name: "Cornell University", logo: "/cornell-seal-official.svg", tone: "logo-lockup--cornell", lines: ["Cornell University"] },
-  { name: "NYC Buildings", logo: "/logo-nyc-buildings-supplied.png", tone: "" },
+  { name: "NYC Buildings", logo: "/logo-nyc-buildings-supplied.png", tone: "logo-image--nyc" },
   { name: "IHG Hotels & Resorts", logo: "/logo-ihg-transparent.png", tone: "logo-image--light" },
   { name: "Stanford ML", logo: "/logo-stanford-ml.svg", tone: "" }
 ];
