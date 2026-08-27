@@ -16,40 +16,37 @@ const institutions = [
 const manifesto = [
   {
     emphasis: true,
-    text: "The most expensive part of a conversation is often what you understand after it ends."
+    text: "The most expensive decisions are often made with information about the conversation but not the person."
   },
   {
     emphasis: true,
-    text: "A candidate sounded committed and left four months later. A client appeared interested but never moved forward. Two people walked out of the same meeting certain they had agreed. By the time the truth surfaced, it was a cost."
+    text: "A candidate says all the right things. A founder gives a convincing pitch. A client sounds ready to buy. The transcript captures every word. Yet the decision still depends on what you noticed, what you already knew and what your intuition picked up in the room."
   },
   {
-    text: "The signs were often there. A question was avoided. A concern was never resolved. A commitment was assumed rather than made. You were in the room and still missed it because no one can listen, remember context, and decide what to ask next at the same time."
+    text: "We are building a Personal Intelligence Model that makes that layer computable."
   },
   {
-    text: "Companies have systems of record for customers, capital, code, and operations. Yet judgment still lives in scattered calls and notes that lose their meaning after the meeting ends. Existing tools capture what was said. They do not show where understanding broke."
-  },
-  {
-    text: "Asterlava is building the communication intelligence layer for high-stakes decisions. It brings together context before a conversation, follows the reasoning during it, and shows what was established, what remains uncertain, and what should happen next."
-  },
-  {
-    text: "Asterlava connects what people said with what they later did, learning which signals preceded successful hires, completed deals, failed partnerships, and costly mistakes."
-  },
-  {
-    text: "We are beginning where misunderstanding has an immediate price: hiring, enterprise deals, investments, negotiations, and strategic partnerships. The larger ambition is to become the system of record for how judgment is formed inside organizations."
-  },
-  {
-    text: "Asterlava is founded by Ishita Gupta, a Cornell graduate whose work spans financial communication surveillance at JPMorgan, medical AI research at Weill Cornell Medicine, decision systems using New York City municipal data, and enterprise AI with IHG Hotel group."
-  },
-  {
-    text: "Asterlava does not read minds or manufacture certainty. It makes the evidence already present in a conversation visible while there is still time to act."
+    text: "Asterlava models behavioral signals and intent across conversations, then connects them to your context and history. It does not just remember what someone said. It builds a richer model of the interaction so an agent can reason with the context you would have used yourself."
   },
   {
     emphasis: true,
-    text: "Every important decision begins with a conversation."
+    text: "We are not recording conversations. We are modeling the intelligence behind them."
+  },
+  {
+    text: "Give the agent your context and it can carry your judgment into the rooms you cannot enter. It can recognize patterns across people and interactions and surface what deserves your attention before the outcome makes it obvious."
+  },
+  {
+    text: "The first use cases are where human judgment is expensive: hiring, investing, enterprise sales, negotiations and partnerships."
   },
   {
     emphasis: true,
-    text: "We are building the layer that helps people understand it before the outcome explains it for them."
+    text: "We believe the next generation of AI will not just know more. It will understand people better."
+  },
+  {
+    text: "Asterlava is building that layer."
+  },
+  {
+    text: "Ishita Gupta is a Cornell merit scholar who has worked at JPMorgan and Weill Cornell Medicine and built decision systems with NYC government under the Mayor. She has won 10+ national Olympiads and beat 3M+ students in India's toughest JEE examination. Her previous AI product acquired 15 paying customers in 24 hours."
   }
 ];
 
@@ -75,26 +72,25 @@ export default function Home() {
 
       <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-3xl flex-col px-5 pb-24 pt-8 sm:px-8 sm:pt-10">
         <header className="flex items-center justify-between gap-6">
-          <a href="#" className="flex items-center gap-4 text-[1.2rem] font-semibold uppercase tracking-[0.32em] text-[#f3f4ef] sm:text-[1.4rem]">
+          <a href="#" className="flex items-center gap-2 text-[1.05rem] font-semibold uppercase tracking-[0.3em] text-[#f3f4ef] sm:text-[1.2rem]">
             <Image className="asterlava-logo" src="/asterlava-logo.png" alt="" width={48} height={32} priority />
             Asterlava
           </a>
         </header>
 
-        <article className="my-auto max-w-2xl py-16 sm:py-20">
-          <div className="mb-11 space-y-1 text-[0.7rem] leading-5 text-[#7f8883]">
-            <p>The Manifesto</p>
+        <article className="mt-10 max-w-2xl pb-16 sm:mt-12 sm:pb-20">
+          <div className="mb-5 space-y-1 text-[0.62rem] leading-4 text-[#7f8883]">
             <p>July 2026</p>
           </div>
-          <h1 className="mb-10 text-[1.1rem] font-medium tracking-[-0.01em] text-[#f3f4ef] sm:text-[1.25rem]">The Communication Intelligence Layer</h1>
-          <div className="space-y-6 sm:space-y-7">
+          <h1 className="mb-8 text-[0.94rem] font-medium tracking-[-0.01em] text-[#f3f4ef] sm:text-[1.05rem]">The Personal Intelligence Model</h1>
+          <div className="space-y-3 sm:space-y-4">
             {manifesto.map((item, index) => (
               <p
                 key={index}
                 className={
                   item.emphasis
-                    ? "max-w-2xl text-[1.18rem] font-semibold leading-[1.35] tracking-normal text-[#f3f4ef] sm:text-[1.32rem]"
-                    : "max-w-2xl text-[0.94rem] leading-[1.72] text-[#b1b9b4] sm:text-[1rem] sm:leading-[1.78]"
+                    ? "max-w-2xl text-[0.8rem] font-semibold leading-[1.55] tracking-normal text-[#f3f4ef] sm:text-[0.86rem] sm:leading-[1.6]"
+                    : "max-w-2xl text-[0.8rem] leading-[1.55] text-[#b1b9b4] sm:text-[0.86rem] sm:leading-[1.6]"
                 }
               >
                 {item.text}
@@ -105,13 +101,13 @@ export default function Home() {
             <a
               href="mailto:ishita@asterlava.com?subject=Asterlava%20waitlist"
               onClick={() => track("waitlist_click", { location: "manifesto_end" })}
-              className="rounded-full bg-[#f1c39a] px-5 py-2.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#241923] transition-colors hover:bg-[#ffe1bd]"
+              className="rounded-full bg-[#f1c39a] px-5 py-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-[#241923] transition-colors hover:bg-[#ffe1bd]"
             >
               Join waitlist
             </a>
             <a
               href="mailto:ishita@asterlava.com?subject=Asterlava%20demo"
-              className="rounded-full border border-[#dca777]/50 bg-[#dca777]/10 px-5 py-2.5 text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#f1c39a] transition-colors hover:bg-[#dca777]/20"
+              className="rounded-full border border-[#dca777]/50 bg-[#dca777]/10 px-5 py-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-[#f1c39a] transition-colors hover:bg-[#dca777]/20"
             >
               Get in touch
             </a>
