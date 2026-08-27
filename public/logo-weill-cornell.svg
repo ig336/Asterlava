@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 110">
+  <circle cx="42" cy="54" r="30" fill="none" stroke="#c7352d" stroke-width="3"/>
+  <path d="M30 39h24v30H30zM30 49h24M42 39v30" fill="none" stroke="#c7352d" stroke-width="2"/>
+  <text x="88" y="50" fill="#c7352d" font-family="Arial, sans-serif" font-size="34" font-weight="700">Weill Cornell</text>
+  <text x="88" y="86" fill="#d88424" font-family="Arial, sans-serif" font-size="32" font-weight="700">Medicine</text>
+</svg>

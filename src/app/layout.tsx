@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Patient BMI Registry",
-  description: "Secure clinical intake application for demographics and BMI review"
+  title: "Asterlava",
+  description: "The perception layer for high-stakes human conversation."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
