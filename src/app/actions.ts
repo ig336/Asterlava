@@ -1,6 +1,6 @@
 "use server";
 
-import { Prisma } from "@prisma/client";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { revalidatePath } from "next/cache";
 import { patientInputSchema } from "@/lib/validation";
 import { canReachDatabase } from "@/lib/databaseHealth";
@@ -33,7 +33,7 @@ export async function createPatientAction(_prevState: ActionState, formData: For
     revalidatePath("/");
     return { ok: true, message: "Patient intake saved securely." };
   } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2002") {
+    if (error instanceof PrismaClientKnownRequestError && error.code === "P2002") {
       return { ok: false, message: "A patient with this email already exists." };
     }
 
