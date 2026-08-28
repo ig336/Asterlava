@@ -1,18 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { track } from "@vercel/analytics";
 import AsterlavaBackdrop from "@/components/AsterlavaBackdrop";
-
-const institutions = [
-  { name: "J.P. Morgan", logo: "/logo-jpmorgan-transparent.png", tone: "" },
-  { name: "Weill Cornell Medicine", logo: "/cornell-seal-official.svg", tone: "logo-lockup--weill", lines: ["Weill Cornell", "Medicine"] },
-  { name: "Cornell University", logo: "/cornell-seal-official.svg", tone: "logo-lockup--cornell", lines: ["Cornell University"] },
-  { name: "NYC Buildings", logo: "/logo-nyc-buildings-supplied.png", tone: "logo-image--nyc" },
-  { name: "IHG Hotels & Resorts", logo: "/logo-ihg-transparent.png", tone: "logo-image--light" },
-  { name: "Stanford ML", logo: "/logo-stanford-ml.svg", tone: "" }
-];
 
 type ManifestoItem = {
   text: string;
@@ -83,26 +75,13 @@ const manifesto: ManifestoItem[][] = [
 ];
 
 export default function Home() {
-  const [showLogos, setShowLogos] = useState(false);
-
-  useEffect(() => {
-    const updateLogoVisibility = () => {
-      const pageBottom = document.documentElement.scrollHeight - window.innerHeight;
-      setShowLogos(window.scrollY >= pageBottom - 24);
-    };
-
-    updateLogoVisibility();
-    window.addEventListener("scroll", updateLogoVisibility, { passive: true });
-    return () => window.removeEventListener("scroll", updateLogoVisibility);
-  }, []);
-
   return (
     <main className="relative min-h-screen overflow-x-hidden bg-[#141918] text-[#f3f4ef]">
       <div className="manifesto-glow absolute inset-0 -z-20" />
       <AsterlavaBackdrop scrollDriven highDetail={false} />
       <div className="signal-grid absolute inset-0 -z-10" />
 
-      <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-2xl flex-col px-5 pb-36 pt-6 sm:px-8 sm:pb-40 sm:pt-8">
+      <section className="relative z-10 mx-auto flex min-h-screen w-full max-w-2xl flex-col px-5 pb-16 pt-6 sm:px-8 sm:pb-20 sm:pt-8">
         <header className="flex items-center justify-between gap-6">
           <a href="#" className="flex items-center gap-2 text-[1.05rem] font-semibold uppercase tracking-[0.3em] text-[#f3f4ef] sm:text-[1.2rem]">
             <Image className="asterlava-logo" src="/asterlava-logo.png" alt="" width={48} height={32} priority />
@@ -126,63 +105,109 @@ export default function Home() {
               </p>
             ))}
           </div>
-          <div className="mt-7 flex flex-wrap items-center gap-3 sm:mt-9">
-            <a
-              href="mailto:ishita@asterlava.com?subject=Asterlava%20waitlist"
-              onClick={() => track("waitlist_click", { location: "manifesto_end" })}
-              className="rounded-full bg-[#f1c39a] px-5 py-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-[#241923] transition-colors hover:bg-[#ffe1bd]"
-            >
-              Join waitlist
-            </a>
-            <a
-              href="mailto:ishita@asterlava.com?subject=Asterlava%20demo"
-              className="rounded-full border border-[#dca777]/50 bg-[#dca777]/10 px-5 py-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-[#f1c39a] transition-colors hover:bg-[#dca777]/20"
-            >
-              Get in touch
-            </a>
-          </div>
+          <WaitlistForm />
         </article>
 
       </section>
 
-      <div className="relative z-20">
-        <LogoMarquee visible={showLogos} />
-      </div>
     </main>
   );
 }
 
-function LogoMarquee({ visible }: { visible: boolean }) {
-  const repeated = [...institutions, ...institutions];
+function WaitlistForm() {
+  const [open, setOpen] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const values = new FormData(event.currentTarget);
+    const email = String(values.get("email") ?? "").trim();
+    const brief = String(values.get("brief") ?? "").trim();
+    const subject = encodeURIComponent("Asterlava waitlist");
+    const body = encodeURIComponent(`Email: ${email}\n\nWhat I would like to connect about:\n${brief}`);
+
+    track("waitlist_click", { location: "waitlist_modal" });
+    setSubmitted(true);
+    window.location.href = `mailto:ishita@asterlava.com?subject=${subject}&body=${body}`;
+  };
 
   return (
-    <div className={`logo-strip fixed inset-x-0 bottom-0 py-2.5 backdrop-blur-xl ${visible ? "logo-strip--visible" : ""}`}>
-      <div className="logo-marquee flex w-max gap-3 px-3">
-        {repeated.map((institution, index) => (
+    <>
+      <button
+        type="button"
+        onClick={() => {
+          setOpen(true);
+          setSubmitted(false);
+        }}
+        className="mt-7 rounded-full bg-[#f1c39a] px-5 py-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-[#241923] transition-colors hover:bg-[#ffe1bd] sm:mt-9"
+      >
+        Join waitlist
+      </button>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-40 flex items-center justify-center bg-[#0a0d0c]/65 p-5 backdrop-blur-sm"
+          role="presentation"
+          onMouseDown={() => setOpen(false)}
+        >
           <div
-            key={`${institution}-${index}`}
-            className="logo-tile flex h-20 min-w-56 items-center justify-center px-5 text-center text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#7f8883]"
-            aria-hidden={index >= institutions.length}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="waitlist-title"
+            className="w-full max-w-md rounded-2xl border border-[#dca777]/30 bg-[#18201e]/85 p-5 shadow-2xl backdrop-blur-xl sm:p-6"
+            onMouseDown={(event) => event.stopPropagation()}
           >
-            {institution.lines ? (
-              <span className={`logo-lockup ${institution.tone}`}>
-                <Image className="logo-seal" src={institution.logo} alt="" width={54} height={54} />
-                <span className="logo-lockup__text">
-                  {institution.lines.map((line) => <span key={line}>{line}</span>)}
-                </span>
-              </span>
-            ) : (
-              <Image
-                className={`logo-image ${institution.tone}`}
-                src={institution.logo}
-                alt={index < institutions.length ? institution.name : ""}
-                width={224}
-                height={80}
-              />
-            )}
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <h2 id="waitlist-title" className="text-[0.98rem] font-medium text-[#f3f4ef]">Join the waitlist</h2>
+                <p className="mt-2 text-[0.74rem] leading-5 text-[#9da6a0]">Tell us a little about what you would like to connect about.</p>
+              </div>
+              <button
+                type="button"
+                aria-label="Close waitlist form"
+                onClick={() => setOpen(false)}
+                className="text-[0.65rem] uppercase tracking-[0.14em] text-[#9da6a0] transition-colors hover:text-[#f3f4ef]"
+              >
+                Close
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="mt-5 space-y-4">
+              <label className="block text-[0.62rem] uppercase tracking-[0.14em] text-[#aab2ac]">
+                Email
+                <input
+                  required
+                  autoFocus
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  placeholder="you@example.com"
+                  className="mt-2 block w-full rounded-md border border-[#dca777]/35 bg-[#101614]/55 px-3 py-2.5 text-[0.78rem] normal-case tracking-normal text-[#f3f4ef] outline-none placeholder:text-[#78827c] focus:border-[#f1c39a]"
+                />
+              </label>
+              <label className="block text-[0.62rem] uppercase tracking-[0.14em] text-[#aab2ac]">
+                Your interest
+                <textarea
+                  required
+                  name="brief"
+                  rows={4}
+                  placeholder="A sentence or two"
+                  className="mt-2 block w-full resize-y rounded-md border border-[#dca777]/35 bg-[#101614]/55 px-3 py-2.5 text-[0.78rem] normal-case leading-5 tracking-normal text-[#f3f4ef] outline-none placeholder:text-[#78827c] focus:border-[#f1c39a]"
+                />
+              </label>
+              <div className="flex items-center justify-between gap-3 pt-1">
+                <button
+                  type="submit"
+                  className="rounded-full bg-[#f1c39a] px-5 py-2.5 text-[0.6rem] font-semibold uppercase tracking-[0.16em] text-[#241923] transition-colors hover:bg-[#ffe1bd]"
+                >
+                  Send interest
+                </button>
+                {submitted && <span className="text-right text-[0.65rem] text-[#8f9891]">Opening your email client...</span>}
+              </div>
+            </form>
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }
