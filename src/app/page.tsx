@@ -123,8 +123,8 @@ function WaitlistForm() {
     const values = new FormData(event.currentTarget);
     const email = String(values.get("email") ?? "").trim();
     const brief = String(values.get("brief") ?? "").trim();
-    const subject = encodeURIComponent("Asterlava waitlist");
-    const body = encodeURIComponent(`Email: ${email}\n\nWhat I would like to connect about:\n${brief}`);
+    const subject = encodeURIComponent("Interest in Asterlava");
+    const body = encodeURIComponent(`${brief}\n\nReply email: ${email}`);
 
     track("waitlist_click", { location: "waitlist_modal" });
     setSubmitted(true);
@@ -202,7 +202,7 @@ function WaitlistForm() {
                 >
                   Send interest
                 </button>
-                {submitted && <span className="text-right text-[0.65rem] text-[#8f9891]">Opening your email client...</span>}
+                {submitted && <span className="text-right text-[0.65rem] text-[#8f9891]">Opening email to Ishita...</span>}
               </div>
             </form>
           </div>
